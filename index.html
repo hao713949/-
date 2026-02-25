@@ -1,253 +1,275 @@
 <!DOCTYPE html>
-<html lang="zh-Hant">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>大坑景觀別墅 ─ 營建統包與開發管理計畫</title>
+    <title>Dakeng Villa | Project Management</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
         :root {
-            --forest-green: #2d5a27;
-            --earth-brown: #8b5a2b;
-            --light-beige: #f9f7f2;
-            --dark-text: #333;
-            --gold-accent: #c5a059;
+            --dark: #1a1a1a;
+            --light: #ffffff;
+            --grey: #f4f4f4;
+            --accent: #8b5a2b;
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: "Microsoft JhengHei", "PingFang TC", sans-serif; }
-        html { scroll-behavior: smooth; }
-        body { background-color: var(--light-beige); color: var(--dark-text); line-height: 1.8; }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: "Helvetica Neue", Helvetica, Arial, "Microsoft JhengHei", sans-serif; }
+        body { background-color: var(--light); color: var(--dark); line-height: 1.6; -webkit-font-smoothing: antialiased; }
 
         /* Navigation */
         nav { 
             position: fixed; top: 0; width: 100%; 
             background: rgba(255, 255, 255, 0.95); 
-            padding: 15px 50px; display: flex; 
+            padding: 25px 50px; display: flex; 
             justify-content: space-between; align-items: center; 
-            z-index: 1000; box-shadow: 0 2px 10px rgba(0,0,0,0.1); 
+            z-index: 1000; transition: 0.4s;
         }
-        .logo { font-weight: bold; color: var(--forest-green); font-size: 1.2rem; text-decoration: none; }
-        .nav-links a { text-decoration: none; color: var(--dark-text); margin-left: 20px; font-size: 0.9rem; transition: 0.3s; }
-        .nav-links a:hover { color: var(--earth-brown); }
+        .logo { font-weight: 300; letter-spacing: 5px; color: var(--dark); font-size: 1rem; text-decoration: none; text-transform: uppercase; }
+        
+        .nav-right { display: flex; align-items: center; }
+        .nav-links a { text-decoration: none; color: var(--dark); margin-left: 30px; font-size: 0.7rem; letter-spacing: 2px; text-transform: uppercase; opacity: 0.6; transition: 0.3s; }
+        .nav-links a:hover { opacity: 1; }
+        
+        /* Language Switcher */
+        .lang-switch { margin-left: 40px; font-size: 0.7rem; letter-spacing: 1px; cursor: pointer; border-left: 1px solid #ddd; padding-left: 20px; }
+        .lang-switch span { opacity: 0.4; transition: 0.3s; }
+        .lang-switch span.active { opacity: 1; font-weight: 500; }
 
-        /* Sections General */
-        section { padding: 100px 10% 80px; min-height: 100vh; display: flex; flex-direction: column; justify-content: center; }
-        h2 { font-size: 2.5rem; color: var(--forest-green); margin-bottom: 10px; border-left: 5px solid var(--earth-brown); padding-left: 20px; }
-        h3 { font-size: 1.4rem; color: var(--earth-brown); margin-bottom: 30px; font-weight: 400; }
-
-        /* Page 1: Hero (背景更新) */
+        /* Hero */
         #home {
-            background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), 
-                        url('https://lh3.googleusercontent.com/u/0/d/1CILyYB8mzoOmYXw7e6Gu4sIJMjLKKV9P') no-repeat center center;
-            background-size: cover; background-attachment: fixed;
-            color: white; text-align: center; align-items: center;
+            height: 100vh;
+            background: linear-gradient(rgba(0,0,0,0.1), rgba(0,0,0,0.1)), 
+                        url('https://lh3.googleusercontent.com/d/189gpbEwCflN2B_SJhYy6_Zn2T6zkz9Wa') no-repeat center center;
+            background-size: cover;
+            display: flex; flex-direction: column; justify-content: center; align-items: center; color: white; text-align: center;
         }
-        #home h1 { font-size: 3.5rem; margin-bottom: 15px; text-shadow: 2px 2px 10px rgba(0,0,0,0.5); }
-        .hero-desc { max-width: 700px; background: rgba(45, 90, 39, 0.85); padding: 25px; border-radius: 8px; margin-bottom: 40px; }
+        #home h1 { font-size: 4.5rem; font-weight: 200; letter-spacing: 18px; text-transform: uppercase; margin-bottom: 20px; }
+        .hero-desc { font-size: 0.8rem; letter-spacing: 5px; text-transform: uppercase; opacity: 0.9; }
 
-        /* Photo Grid */
-        .photo-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; width: 100%; max-width: 1200px; }
-        .photo-item { height: 220px; border-radius: 8px; overflow: hidden; cursor: pointer; box-shadow: 0 4px 15px rgba(0,0,0,0.3); }
-        .photo-item img { width: 100%; height: 100%; object-fit: cover; transition: 0.5s; }
-        .photo-item:hover img { transform: scale(1.1); }
+        /* Project Grid */
+        .projects-section { padding: 100px 0 0; }
+        .project-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 5px; }
+        .project-item { position: relative; height: 75vh; overflow: hidden; cursor: pointer; background-color: var(--grey); }
+        .project-item img { width: 100%; height: 100%; object-fit: cover; transition: transform 1.5s cubic-bezier(0.15, 0.75, 0.5, 1); }
+        .project-item:hover img { transform: scale(1.05); }
+        .project-item:last-child:nth-child(odd) { grid-column: span 2; }
 
-        /* Tech Features (新樣式) */
-        .tech-feature { display: flex; flex-direction: column; gap: 30px; }
-        .tech-item { display: flex; align-items: flex-start; gap: 20px; padding-bottom: 20px; border-bottom: 1px dashed #ccc; }
-        .tech-item:last-child { border-bottom: none; }
-        .tech-item i { font-size: 2rem; color: var(--earth-brown); padding: 10px; flex-shrink: 0; }
-        .tech-item strong { display: block; font-size: 1.2rem; color: var(--forest-green); margin-bottom: 5px; }
-        .tech-item p { color: #666; font-size: 0.95rem; }
+        .project-overlay {
+            position: absolute; bottom: 0; left: 0; width: 100%; padding: 40px;
+            background: linear-gradient(transparent, rgba(0,0,0,0.5));
+            color: white; opacity: 0; transition: 0.5s;
+        }
+        .project-item:hover .project-overlay { opacity: 1; }
+        .project-title { font-size: 1rem; font-weight: 300; letter-spacing: 3px; text-transform: uppercase; }
+        .project-category { font-size: 0.6rem; letter-spacing: 2px; text-transform: uppercase; margin-top: 10px; opacity: 0.7; }
+
+        /* Content Sections */
+        section.content { padding: 140px 10%; max-width: 1400px; margin: 0 auto; }
+        .section-label { font-size: 0.65rem; letter-spacing: 3px; color: var(--accent); text-transform: uppercase; margin-bottom: 25px; display: block; }
+        h2 { font-size: 2.2rem; font-weight: 200; letter-spacing: 6px; text-transform: uppercase; margin-bottom: 50px; line-height: 1.3; }
+        
+        .content-flex { display: flex; gap: 80px; }
+        .content-text { flex: 1; font-size: 0.9rem; color: #666; font-weight: 300; line-height: 2.2; text-align: justify; }
+
+        /* Tech Grid */
+        .tech-list { display: grid; grid-template-columns: repeat(3, 1fr); gap: 50px; margin-top: 80px; }
+        .tech-card { padding-top: 30px; border-top: 1px solid #eee; }
+        .tech-card h4 { font-size: 0.8rem; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 20px; }
+        .tech-card p { font-size: 0.75rem; color: #888; font-weight: 300; }
 
         /* Lightbox */
         #lightbox {
-            display: none; position: fixed; z-index: 9999; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0, 0, 0, 0.9); justify-content: center; align-items: center;
+            display: none; position: fixed; z-index: 2000; top: 0; left: 0; width: 100%; height: 100%;
+            background: white; justify-content: center; align-items: center;
         }
-        #lightbox img { max-width: 85%; max-height: 85%; border: 3px solid white; border-radius: 5px; }
-        .lb-btn { position: absolute; color: white; background: none; border: none; font-size: 50px; cursor: pointer; padding: 20px; transition: 0.3s; }
-        #lb-close { top: 20px; right: 30px; font-size: 60px; }
+        #lightbox img { max-height: 85vh; max-width: 90%; object-fit: contain; }
+        .lb-btn { position: absolute; top: 40px; right: 40px; border: none; background: none; font-size: 1.5rem; cursor: pointer; }
 
-        /* Content Styles */
-        .content-box { background: white; padding: 40px; border-radius: 8px; box-shadow: 0 5px 15px rgba(0,0,0,0.05); }
-        .function-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 20px; margin-top: 30px; }
-        .func-card { background: var(--light-beige); padding: 25px 15px; border-top: 4px solid var(--forest-green); text-align: center; }
-        .func-card i { font-size: 2.2rem; color: var(--earth-brown); margin-bottom: 15px; }
-        
-        ul.check-list { list-style: none; }
-        ul.check-list li { margin-bottom: 15px; padding-left: 35px; position: relative; }
-        ul.check-list li::before { 
-            content: "\f058"; font-family: "Font Awesome 6 Free"; font-weight: 900; 
-            position: absolute; left: 0; color: var(--forest-green); font-size: 1.2rem;
-        }
+        footer { padding: 80px 50px; background: var(--grey); font-size: 0.6rem; letter-spacing: 2px; text-transform: uppercase; color: #999; }
 
-        /* Login & Dashboard */
-        #login-section { background-color: #f0f4f0; padding: 100px 10%; }
-        .login-card { background: white; padding: 40px; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); max-width: 450px; margin: 0 auto; text-align: center; }
-        .input-group { text-align: left; margin-bottom: 20px; }
-        .input-group label { display: block; margin-bottom: 8px; font-weight: bold; color: var(--forest-green); }
-        .input-group input { width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 6px; }
-        .login-btn { display: inline-block; padding: 14px 50px; background: var(--forest-green); color: white; text-decoration: none; border-radius: 50px; border: none; cursor: pointer; width: 100%; font-weight: bold; }
-        
-        #project-dashboard { display: none; width: 100%; max-width: 1100px; margin: 0 auto; }
-        .category-block { background: white; padding: 30px; border-radius: 10px; margin-bottom: 30px; border-top: 5px solid var(--earth-brown); }
-        .photo-gallery-inner { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 15px; }
-        .photo-slot { aspect-ratio: 3/2; background: #f8f8f8; border: 2px dashed #ddd; border-radius: 8px; display: flex; align-items: center; justify-content: center; color: #aaa; overflow: hidden; }
-        .photo-slot img { width: 100%; height: 100%; object-fit: cover; }
-
-        footer { text-align: center; padding: 60px; background: #222; color: #888; }
-
-        @media (max-width: 768px) {
-            #home h1 { font-size: 2.2rem; }
-            nav { padding: 15px 20px; }
-            .nav-links { display: none; }
+        @media (max-width: 900px) {
+            .project-grid { grid-template-columns: 1fr; }
+            .project-item:last-child:nth-child(odd) { grid-column: span 1; }
+            #home h1 { font-size: 2.5rem; letter-spacing: 10px; }
+            .content-flex { flex-direction: column; gap: 40px; }
+            .tech-list { grid-template-columns: 1fr; }
+            nav { padding: 20px; }
+            .lang-switch { margin-left: 15px; }
         }
     </style>
 </head>
 <body>
 
     <nav>
-        <a href="#home" class="logo">大坑景觀別墅 專案管理</a>
-        <div class="nav-links">
-            <a href="#concept">核心理念</a>
-            <a href="#complexity">山坡建築</a>
-            <a href="#role">角色代理</a>
-            <a href="#login-section">業主登錄</a>
+        <a href="#home" class="logo">DK Project</a>
+        <div class="nav-right">
+            <div class="nav-links">
+                <a href="#concept" data-en="Concept" data-zh="設計理念">Concept</a>
+                <a href="#projects" data-en="Projects" data-zh="專案展示">Projects</a>
+                <a href="#complexity" data-en="Technical" data-zh="技術細節">Technical</a>
+                <a href="#login-section" data-en="Portal" data-zh="業主登入">Portal</a>
+            </div>
+            <div class="lang-switch" onclick="toggleLanguage()">
+                <span id="lang-en" class="active">EN</span> | <span id="lang-zh">中文</span>
+            </div>
         </div>
     </nav>
 
     <section id="home">
-        <h1>大坑景觀別墅</h1>
-        <p style="font-size: 1.5rem; letter-spacing: 3px; margin-bottom: 25px;">營建統包與開發管理計畫</p>
-        <div class="hero-desc">
-            <p>從藍圖到落成，為您建構傳世宅邸</p>
-            <p style="font-size: 0.95rem; margin-top: 10px; opacity: 0.9;">專業統包商：資源整合、承諾交付 | 開發顧問：風險控管、價值極大化</p>
-        </div>
-        
-        <div class="photo-grid" id="gallery">
-            <div class="photo-item"><img src="https://lh3.googleusercontent.com/u/0/d/1OhDKWQL5YvJ1xBFTh6GcZl_rCR-DYBi8" onclick="openLightbox(0)"></div>
-            <div class="photo-item"><img src="https://lh3.googleusercontent.com/u/0/d/189gpbEwCflN2B_SJhYy6_Zn2T6zkz9Wa" onclick="openLightbox(1)"></div>
-            <div class="photo-item"><img src="https://lh3.googleusercontent.com/u/0/d/1Gb08wsbfqdGlnZMw60eYtIxocHXhBM0q" onclick="openLightbox(2)"></div>
-            <div class="photo-item"><img src="https://lh3.googleusercontent.com/u/0/d/1qQh1xJnJLaykDgzROadujnvNI3hewYF0" onclick="openLightbox(3)"></div>
-            <div class="photo-item"><img src="https://lh3.googleusercontent.com/u/0/d/1c-x_exXmdSqeYed22G1ghB42EvdA1EbE" onclick="openLightbox(4)"></div>
-            <div class="photo-item"><img src="https://lh3.googleusercontent.com/u/0/d/1UJt-Rr0b8HYHzwBeB_TAGjpfOyTIMHHS" onclick="openLightbox(5)"></div>
+        <h1 data-en="Dakeng Villa" data-zh="建築開發顧問公司">Dakeng Villa</h1>
+        <p class="hero-desc" data-en="Strategic Management & Design-Build" data-zh="專案策略管理與統包工程">Strategic Management & Design-Build</p>
+    </section>
+
+    <section id="projects" class="projects-section">
+        <div class="project-grid" id="gallery">
+            <div class="project-item" onclick="openLightbox(0)">
+                <img src="https://lh3.googleusercontent.com/d/1Gb08wsbfqdGlnZMw60eYtIxocHXhBM0q">
+                <div class="project-overlay">
+                    <div class="project-title">Structure Integration</div>
+                    <div class="project-category">Foundation</div>
+                </div>
+            </div>
+            <div class="project-item" onclick="openLightbox(1)">
+                <img src="https://lh3.googleusercontent.com/d/189gpbEwCflN2B_SJhYy6_Zn2T6zkz9Wa">
+                <div class="project-overlay">
+                    <div class="project-title">Elevation Design</div>
+                    <div class="project-category">Architectural</div>
+                </div>
+            </div>
+            <div class="project-item" onclick="openLightbox(2)">
+                <img src="https://lh3.googleusercontent.com/d/1qQh1xJnJLaykDgzROadujnvNI3hewYF0">
+                <div class="project-overlay">
+                    <div class="project-title">Site Analysis</div>
+                    <div class="project-category">Landscape</div>
+                </div>
+            </div>
+            <div class="project-item" onclick="openLightbox(3)">
+                <img src="https://lh3.googleusercontent.com/d/1OhDKWQL5YvJ1xBFTh6GcZl_rCR-DYBi8">
+                <div class="project-overlay">
+                    <div class="project-title">Material Curation</div>
+                    <div class="project-category">Finishing</div>
+                </div>
+            </div>
+            <div class="project-item" onclick="openLightbox(4)">
+                <img src="https://lh3.googleusercontent.com/d/1CILyYB8mzoOmYXw7e6Gu4sIJMjLKKV9P">
+                <div class="project-overlay">
+                    <div class="project-title">Environmental Study</div>
+                    <div class="project-category">Exterior</div>
+                </div>
+            </div>
+            <div class="project-item" onclick="openLightbox(5)">
+                <img src="https://lh3.googleusercontent.com/d/1UJt-Rr0b8HYHzwBeB_TAGjpfOyTIMHHS">
+                <div class="project-overlay">
+                    <div class="project-title">Spatial Volume</div>
+                    <div class="project-category">Interior</div>
+                </div>
+            </div>
+            <div class="project-item" onclick="openLightbox(6)">
+                <img src="https://lh3.googleusercontent.com/d/1c-x_exXmdSqeYed22G1ghB42EvdA1EbE">
+                <div class="project-overlay">
+                    <div class="project-title">Project Delivery</div>
+                    <div class="project-category">Finalization</div>
+                </div>
+            </div>
         </div>
     </section>
 
     <div id="lightbox">
-        <button id="lb-close" class="lb-btn" onclick="closeLightbox()">×</button>
-        <button class="lb-btn" onclick="changeImage(-1)" style="left:30px;"><i class="fas fa-chevron-left"></i></button>
+        <button class="lb-btn" onclick="closeLightbox()"><i class="fas fa-times"></i></button>
         <img id="lightbox-img" src="">
-        <button class="lb-btn" onclick="changeImage(1)" style="right:30px;"><i class="fas fa-chevron-right"></i></button>
     </div>
 
-    <section id="concept">
-        <h2>專案管理與整合承攬核心理念</h2>
-        <h3>透過「垂直整合」取代「多頭馬車」，實現地主利益最大化</h3>
-        <div class="content-box">
-            <p>我們採取 <strong>「顧問式統包」</strong> 模式。不同於傳統營造廠僅負責按圖施工，我們在設計階段即介入整合。透過與優質專業分包商的直接對接，我們為地主剔除層層轉包利潤，轉化為更嚴謹的專業技師監工與材料升級。</p>
-            <div class="function-grid">
-                <div class="func-card"><i class="fas fa-layer-group"></i><h4>資源整合</h4><p>對接優質工班</p></div>
-                <div class="func-card"><i class="fas fa-file-contract"></i><h4>合約承攬</h4><p>負全案最終責任</p></div>
-                <div class="func-card"><i class="fas fa-user-shield"></i><h4>專業監管</h4><p>專案技師簽核</p></div>
-                <div class="func-card"><i class="fas fa-receipt"></i><h4>稅務透明</h4><p>100% 正式發票</p></div>
+    <section id="concept" class="content">
+        <span class="section-label" data-en="Philosophy" data-zh="核心理念">Philosophy</span>
+        <h2 data-en="Vertical Integration<br>Maximizing Stakeholder Value" data-zh="垂直整合<br>實現地主利益最大化">Vertical Integration<br>Maximizing Stakeholder Value</h2>
+        <div class="content-flex">
+            <div class="content-text" id="desc-1">
+                We adopt a "Consultant-Led Design-Build" model. Unlike traditional contractors, we intervene at the design stage to eliminate unnecessary markups from sub-contracting, redirecting those funds into superior technical supervision and material upgrades.
+            </div>
+            <div class="content-text" id="desc-2">
+                This ensures precision from blueprint to completion, significantly enhancing architectural quality while mitigating legal and technical risks in complex hillside developments.
             </div>
         </div>
     </section>
 
-    <section id="complexity" style="background-color: #eef2ed;">
-        <h2>山坡地建築的工藝挑戰</h2>
-        <h3>與地質搏鬥的藝術 ─ 我們如何克服地形限制</h3>
-        
-        <div class="content-box">
-            <div class="tech-feature">
-                <div class="tech-item">
-                    <i class="fas fa-mountain"></i>
-                    <div>
-                        <strong>高規格擋土與地質監測</strong>
-                        <p>結合排樁工法與地錨工程，並在施工期間設置數位監測儀器，精確掌握地盤承載力，確保建築永不位移。</p>
-                    </div>
-                </div>
-                <div class="tech-item">
-                    <i class="fas fa-tint-slash"></i>
-                    <div>
-                        <strong>三維立體防潮系統</strong>
-                        <p>採用「外牆抗壓防水+內側導水盲溝」的複式牆設計，主動引導山體水氣排至基地外，徹底杜絕壁癌問題。</p>
-                    </div>
-                </div>
-                <div class="tech-item">
-                    <i class="fas fa-wind"></i>
-                    <div>
-                        <strong>微氣候物理設計</strong>
-                        <p>利用山谷風效應佈局窗位，在基礎階段即計算熱浮力通風，確保地下空間不陰暗、不潮濕，讓建築會呼吸。</p>
-                    </div>
-                </div>
+    <section id="complexity" class="content" style="background-color: var(--grey);">
+        <span class="section-label" data-en="Engineering" data-zh="技術工藝">Engineering</span>
+        <h2 data-en="Technical Excellence" data-zh="專業技師駐點 ‧ 確保精度">Technical Excellence</h2>
+        <div class="tech-list">
+            <div class="tech-card">
+                <h4 data-en="Slope Stabilization" data-zh="高規格擋土工程">Slope Stabilization</h4>
+                <p data-en="Utilizing advanced piling and soil anchoring with real-time digital monitoring to ensure structural permanence." data-zh="結合排樁工法與地錨工程，設置監測儀器，精確掌握地盤承載力，確保地質穩定與建築安全。">Utilizing advanced piling and soil anchoring with real-time digital monitoring to ensure structural permanence.</p>
+            </div>
+            <div class="tech-card">
+                <h4 data-en="Moisture Control" data-zh="多層次防水防潮">Moisture Control</h4>
+                <p data-en="Implementing 3D cavity wall systems to actively redirect mountain groundwater, eliminating interior humidity issues." data-zh="利用三維複式牆設計與導水盲溝，主動引導山體水氣，解決坡地建築常見的濕氣與壁癌痛點。">Implementing 3D cavity wall systems to actively redirect mountain groundwater, eliminating interior humidity issues.</p>
+            </div>
+            <div class="tech-card">
+                <h4 data-en="Micro-Climate Design" data-zh="通風與採光整合">Micro-Climate Design</h4>
+                <p data-en="Simulating thermal buoyancy for natural ventilation, ensuring healthy and sustainable subterranean living spaces." data-zh="在基礎設計階段納入微氣候分析，確保室內熱浮力通風順暢，營造健康且具物理品質的居住環境。">Simulating thermal buoyancy for natural ventilation, ensuring healthy and sustainable subterranean living spaces.</p>
             </div>
         </div>
     </section>
 
-    <section id="role">
-        <h2>地主的營建總代理</h2>
-        <div class="content-box">
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 40px;">
-                <div>
-                    <h4 style="color:var(--forest-green); margin-bottom:15px; border-bottom: 2px solid var(--gold-accent); display: inline-block;">營建統包商的角色定位</h4>
-                    <ul class="check-list">
-                        <li><strong>單一合約責任：</strong>解決界面不清導致的責任推諉，業主無需面對數十個工班與複雜界面。</li>
-                        <li><strong>專業技師駐點：</strong>現場配備技師隨時簽核放樣與配筋，確保施工精度達到「公釐」等級。</li>
-                    </ul>
-                </div>
-                <div>
-                    <h4 style="color:var(--forest-green); margin-bottom:15px; border-bottom: 2px solid var(--gold-accent); display: inline-block;">實際負責內容</h4>
-                    <ul class="check-list">
-                        <li><strong>技術界面整合：</strong>提前協調水電、冷氣與土建孔位預留，大幅減少二次敲除的成本浪費。</li>
-                        <li><strong>數位化進度回報：</strong>提供全時雲端看板，實現「人不在現場，工地在手機」的透明化管理體感。</li>
-                    </ul>
-                </div>
+    <section id="login-section" class="content">
+        <span class="section-label" data-en="Client Portal" data-zh="業主專區">Client Portal</span>
+        <h2 data-en="Exclusive Dashboard" data-zh="營建總代理專屬看板">Exclusive Dashboard</h2>
+        <div class="content-flex">
+            <div class="content-text" data-en="Access real-time project logs, technical interface reports, and construction milestones through our encrypted portal." data-zh="透過加密通道存取即時進度日誌、技術界面整合報告以及營建里程碑。">
+                Access real-time project logs, technical interface reports, and construction milestones through our encrypted portal.
+            </div>
+            <div style="flex: 1; max-width: 400px;">
+                <input type="text" id="input-id" placeholder="Client ID" style="width: 100%; padding: 15px; border: 1px solid #ddd; margin-bottom: 15px; outline: none; font-size: 0.7rem;">
+                <input type="password" id="input-pw" placeholder="Password" style="width: 100%; padding: 15px; border: 1px solid #ddd; margin-bottom: 20px; outline: none; font-size: 0.7rem;">
+                <button style="width: 100%; padding: 15px; background: var(--dark); color: white; border: none; cursor: pointer; letter-spacing: 2px; text-transform: uppercase; font-size: 0.7rem;" onclick="checkAuth()">Access Dashboard</button>
             </div>
         </div>
-        
-    </section>
-
-    <section id="login-section">
-        <div id="auth-ui" class="login-card">
-            <h2 style="border:none; padding:0; font-size: 1.8rem;">業主專屬進度查詢</h2>
-            <p style="margin-bottom:30px; color:#666;">請輸入代號與密碼以查看即時工程進度</p>
-            <div class="input-group">
-                <label>業主代號</label>
-                <input type="text" id="input-id" placeholder="預設: 123456">
-            </div>
-            <div class="input-group">
-                <label>密碼</label>
-                <input type="password" id="input-pw" placeholder="預設: 123456">
-            </div>
-            <button class="login-btn" onclick="checkAuth()">驗證登錄</button>
-            <p id="err" style="color:red; margin-top:15px; display:none;">驗證失敗，請檢查輸入內容。</p>
-        </div>
-
-        <div id="project-dashboard">
-            <h2 style="text-align: center; margin-bottom: 50px;">大坑專案 ‧ 工程即時看板</h2>
+        <div id="project-dashboard" style="display: none; margin-top: 50px;">
             <div id="categories-container"></div>
-            <div style="text-align: center; margin-top: 50px;">
-                <button class="login-btn" style="width:auto; background:#666;" onclick="location.reload()">登出系統</button>
-            </div>
         </div>
     </section>
 
     <footer>
-        <p>© 2026 大坑景觀別墅開發管理計畫 | 建築契約承攬 ‧ 開發顧問</p>
+        © 2026 DAKENG VILLA MANAGEMENT PLAN. ALL RIGHTS RESERVED.
     </footer>
 
     <script>
-        /* Lightbox 功能 */
+        let currentLang = 'en';
+
+        const translations = {
+            zh: {
+                desc1: "我們採取「顧問式統包」模式。不同於傳統營造廠僅負責按圖施工，我們在設計階段即介入整合。透過與數十家優質專業分包商的直接對接，我們為地主剔除層層轉包利潤。",
+                desc2: "這種模式確保了從藍圖到落成的每一個細節都在精確掌控之中，不僅提升了建築品質，更在複雜的山坡地開發中，為業主規避了潛在風險。"
+            },
+            en: {
+                desc1: "We adopt a \"Consultant-Led Design-Build\" model. Unlike traditional contractors, we intervene at the design stage to eliminate unnecessary markups from sub-contracting, redirecting those funds into superior technical supervision.",
+                desc2: "This ensures precision from blueprint to completion, significantly enhancing architectural quality while mitigating legal and technical risks in complex hillside developments."
+            }
+        };
+
+        function toggleLanguage() {
+            currentLang = currentLang === 'en' ? 'zh' : 'en';
+            
+            // Update UI Active State
+            document.getElementById('lang-en').classList.toggle('active');
+            document.getElementById('lang-zh').classList.toggle('active');
+
+            // Update All Data-Attributes
+            document.querySelectorAll('[data-en]').forEach(el => {
+                el.innerHTML = el.getAttribute(`data-${currentLang}`);
+            });
+
+            // Update Long Text
+            document.getElementById('desc-1').innerText = translations[currentLang].desc1;
+            document.getElementById('desc-2').innerText = translations[currentLang].desc2;
+        }
+
         const mainImgs = Array.from(document.querySelectorAll('#gallery img')).map(i => i.src);
-        let curIdx = 0;
         const lb = document.getElementById('lightbox');
         const lbImg = document.getElementById('lightbox-img');
 
         function openLightbox(idx) {
-            curIdx = idx;
-            lbImg.src = mainImgs[curIdx];
+            lbImg.src = mainImgs[idx];
             lb.style.display = 'flex';
             document.body.style.overflow = 'hidden';
         }
@@ -255,55 +277,31 @@
             lb.style.display = 'none';
             document.body.style.overflow = 'auto';
         }
-        function changeImage(n) {
-            curIdx = (curIdx + n + mainImgs.length) % mainImgs.length;
-            lbImg.src = mainImgs[curIdx];
-        }
-
-        /* 登錄驗證邏輯 */
-        const catNames = ["水土保持", "邊坡及擋土牆", "人工地盤/地下室工程", "一樓工程", "二樓工程", "三樓工程", "庭院景觀工程"];
 
         function checkAuth() {
             const id = document.getElementById('input-id').value;
             const pw = document.getElementById('input-pw').value;
             if (id === "123456" && pw === "123456") {
-                document.getElementById('auth-ui').style.display = 'none';
+                alert(currentLang === 'en' ? "Access Granted" : "驗證成功");
                 document.getElementById('project-dashboard').style.display = 'block';
                 renderCategories();
             } else {
-                document.getElementById('err').style.display = 'block';
+                alert(currentLang === 'en' ? "Invalid Credentials" : "驗證失敗");
             }
         }
 
         function renderCategories() {
             const container = document.getElementById('categories-container');
+            const cats = currentLang === 'en' ? ["Hydro-Civil", "Retention", "Substructure", "Superstructure", "Integration"] : ["水土保持", "邊坡工程", "地下結構", "主體工程", "技術整合"];
             container.innerHTML = ''; 
-            catNames.forEach(name => {
-                const section = document.createElement('div');
-                section.className = 'category-block';
-                section.innerHTML = `
-                    <div class="category-header" style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
-                        <h4 style="color:var(--forest-green)"><i class="fas fa-hammer"></i> ${name}</h4>
-                        <button class="upload-trigger" style="padding: 8px 15px; background: var(--forest-green); color: white; border: none; border-radius: 5px; cursor: pointer; font-size: 0.8rem;" onclick="simulateUpload('${name}')">＋ 上傳照片</button>
-                    </div>
-                    <div class="photo-gallery-inner" id="gallery-${name}">
-                        <div class="photo-slot">待上傳</div>
-                        <div class="photo-slot">待上傳</div>
-                    </div>
-                `;
-                container.appendChild(section);
+            cats.forEach(name => {
+                container.innerHTML += `
+                    <div style="margin-bottom: 40px; border-top: 1px solid #eee; padding-top: 20px;">
+                        <h4 style="font-size: 0.7rem; letter-spacing: 2px; margin-bottom: 20px; text-transform: uppercase;">${name}</h4>
+                        <div style="width: 100px; height: 100px; background: #f9f9f9; display: flex; align-items: center; justify-content: center; font-size: 0.6rem; color: #ccc;">PENDING</div>
+                    </div>`;
             });
         }
-
-        function simulateUpload(name) {
-            const target = document.getElementById(`gallery-${name}`);
-            const newPhoto = document.createElement('div');
-            newPhoto.className = 'photo-slot';
-            newPhoto.innerHTML = `<img src="https://picsum.photos/seed/${Math.random()}/400/300" alt="施工照">`;
-            target.prepend(newPhoto);
-        }
-
-        lb.addEventListener('click', e => { if (e.target === lb) closeLightbox(); });
     </script>
 </body>
 </html>
